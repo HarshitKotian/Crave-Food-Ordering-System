@@ -64,6 +64,23 @@ The frontend communicates with a layered Java backend through REST APIs. Account
 - Optimistic locking for concurrent order updates.
 - Optional Google OAuth2 / OpenID Connect sign-in when configured.
 
+## Screenshots
+
+### Login Page
+![Crave Login Page](screenshots/login.png)
+
+### Food Menu
+![Crave food menu](screenshots/menu.png)
+
+### Shopping Cart
+![Shopping cart](screenshots/cart.png)
+
+### Checkout
+![Checkout page](screenshots/checkout.png)
+
+### Admin Dashboard
+![Admin dashboard](screenshots/admin-dashboard.png)
+
 ## Tech Stack
 
 | Layer | Technologies |
