@@ -1,0 +1,47 @@
+CREATE TABLE app_users (
+ id BIGINT AUTO_INCREMENT PRIMARY KEY,
+ name VARCHAR(80) NOT NULL,
+ email VARCHAR(160) NOT NULL UNIQUE,
+ password_hash VARCHAR(100),
+ role VARCHAR(20) NOT NULL,
+ phone VARCHAR(20) NOT NULL DEFAULT '',
+ google_subject VARCHAR(160) UNIQUE
+);
+CREATE TABLE menu_items (
+ id BIGINT AUTO_INCREMENT PRIMARY KEY,
+ name VARCHAR(100) NOT NULL,
+ description VARCHAR(400) NOT NULL,
+ category VARCHAR(40) NOT NULL,
+ price DECIMAL(10,2) NOT NULL,
+ vegetarian BOOLEAN NOT NULL,
+ available BOOLEAN NOT NULL,
+ symbol VARCHAR(20) NOT NULL,
+ version BIGINT NOT NULL DEFAULT 0
+);
+CREATE TABLE food_orders (
+ id BIGINT AUTO_INCREMENT PRIMARY KEY,
+ customer_id BIGINT NOT NULL,
+ status VARCHAR(30) NOT NULL,
+ address VARCHAR(500) NOT NULL,
+ phone VARCHAR(20) NOT NULL,
+ notes VARCHAR(300) NOT NULL,
+ subtotal DECIMAL(10,2) NOT NULL,
+ delivery_fee DECIMAL(10,2) NOT NULL,
+ total DECIMAL(10,2) NOT NULL,
+ created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+ request_key VARCHAR(80) NOT NULL,
+ version BIGINT NOT NULL DEFAULT 0,
+ CONSTRAINT fk_order_customer FOREIGN KEY (customer_id) REFERENCES app_users(id),
+ CONSTRAINT uk_order_request UNIQUE (customer_id, request_key)
+);
+CREATE INDEX idx_orders_created ON food_orders(created_at);
+CREATE TABLE order_items (
+ id BIGINT AUTO_INCREMENT PRIMARY KEY,
+ order_id BIGINT NOT NULL,
+ menu_item_id BIGINT NOT NULL,
+ name VARCHAR(100) NOT NULL,
+ unit_price DECIMAL(10,2) NOT NULL,
+ quantity INT NOT NULL,
+ CONSTRAINT fk_item_order FOREIGN KEY (order_id) REFERENCES food_orders(id)
+);
